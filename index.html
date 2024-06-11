@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+</head>
+
+<body>
+
+  <button onclick = "GetTranslation()">Get Translation</button>
+
+  <br><br><br><br>
+
+  <label>Type in a sentence</label>
+  <input type = "text" id = "input-text">
+
+  <br><br><br><br>
+
+  <label>Sentence Translated</label>
+  <p id = "output-text"></p>
+
+  <br><br><br><br>
+  
+    <script>
+      async function GetTranslation() {
+        var toLanguage = "es";
+        var fromLanguage = "en";
+        var inputText = document.getElementById("input-text").value;
+        var outputText = document.getElementById("output-text");
+
+        var encodedInput = encodeURIComponent(inputText);
+        var url = `https://nlp-translation.p.rapidapi.com/v1/translate?text=${encodedInput}&to=${toLanguage}&from=${fromLanguage}`;
+
+        var options = {
+          method: 'GET',
+          headers: {
+            'X-RapidAPI-Key': 'fd68cb94e9msh0e747149ce855d2p1070bdjsnf4c51f0e2c19',
+            'X-RapidAPI-Host': 'nlp-translation.p.rapidapi.com'
+          }
+        };
+
+        var response = await fetch(url, options);
+        var data = await response.json();
+        var translation = data.translated_text.es;
+
+        outputText.innerHTML = translation;
+      }
+    </script>
+
+</body>
+
+</html>
